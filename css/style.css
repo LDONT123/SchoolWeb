@@ -1,0 +1,1632 @@
+/* Global Resets and Base Styles */
+:root {
+    --primary-color: #4285F4; /* Google Blue */
+    --accent-color: #FFC107; /* Amber */
+    --accent-color-green: #00C853; /* Green for alternative actions */
+    --neutral-bg: #FFFFFF;
+    --card-bg: #F5F5F5; /* Off-white for cards */
+    --text-primary: #202124; /* Dark Gray/Almost Black */
+    --text-secondary: #5f6368; /* Medium Gray */
+    --text-on-primary: #FFFFFF; /* White text on primary color */
+    --border-color: #E0E0E0; /* Light gray for borders */
+
+    --font-heading: 'Roboto Slab', serif;
+    --font-body: 'Roboto', sans-serif;
+
+    --header-height: 64px;
+    --card-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --card-hover-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    --border-radius: 4px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Homepage News Summary Section */
+#homepage-news-summary {
+    /* Uses .card-based-section for general padding and max-width */
+}
+#homepage-news-summary h2 {
+    text-align: center;
+    margin-bottom: 1.5em; /* Consistent with other section titles */
+}
+
+.news-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid for news items */
+    gap: 20px; /* Gap between news items */
+}
+
+.news-summary-item { /* Extends .card, so it gets shadow, border-radius, bg-color */
+    display: flex;
+    flex-direction: column; /* Stack image and content vertically */
+}
+
+.news-summary-item-image {
+    width: 100%;
+    height: 180px; /* Fixed height for homepage thumbnails */
+    overflow: hidden;
+    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Match card top */
+}
+.news-summary-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.news-summary-item-image a:hover img {
+    transform: scale(1.05);
+}
+
+.news-summary-item-content {
+    padding: 15px; /* Padding inside the content area */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Ensure content area takes up space */
+}
+.news-summary-item-content h3 {
+    font-size: 1.15em; /* Slightly smaller than full news list titles */
+    margin-bottom: 0.4em;
+    color: var(--primary-color); /* Consistent with other card titles */
+}
+.news-summary-item-content h3 a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.news-summary-item-content h3 a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.news-meta-summary {
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.news-excerpt-summary {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: var(--text-secondary); /* Consistent with card p */
+    flex-grow: 1; /* Push "Read More" to bottom */
+    margin-bottom: 10px;
+}
+.news-summary-item .card-link { /* Uses existing .card-link style */
+    margin-top: auto; /* Ensure it's at the bottom */
+}
+
+
+
+/* Frontend News Listing (news.php) */
+.news-listing-container {
+    /* Uses .content-section-container for max-width and padding */
+}
+
+.news-item-summary { /* Extends .card */
+    margin-bottom: 25px;
+    display: flex; /* For image and content side-by-side */
+    flex-direction: column; /* Default stack for mobile */
+    gap: 0; /* Reset gap from base card if any */
+}
+
+.news-summary-image {
+    width: 100%; /* Full width on mobile */
+    max-height: 250px; /* Limit height */
+    overflow: hidden;
+    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Match card top */
+}
+.news-summary-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.news-summary-image a:hover img {
+    transform: scale(1.05);
+}
+
+.news-summary-content {
+    padding: 20px; /* Padding inside the content area of the card */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.news-summary-content h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+.news-summary-content h2 a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.news-summary-content h2 a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+.news-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+.news-excerpt {
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+.news-item-summary .card-link { /* Ensure card-link is at the bottom */
+    margin-top: auto;
+}
+
+/* Responsive for news summary cards */
+@media (min-width: 600px) {
+    .news-item-summary {
+        flex-direction: row; /* Image beside content */
+    }
+    .news-summary-image {
+        width: 200px; /* Fixed width for image thumbnail */
+        height: auto; /* Auto height for image */
+        max-height: none; /* Remove max-height */
+        border-radius: var(--border-radius) 0 0 var(--border-radius); /* Rounded left corners */
+    }
+    .news-summary-content {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0; /* Rounded right corners */
+    }
+}
+
+
+/* Pagination Styling */
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+}
+.pagination li {
+    display: inline;
+    margin: 0 3px;
+}
+.pagination li a, .pagination li span {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.pagination li a:hover {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+}
+.pagination li.active span {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    border-color: var(--primary-color);
+    cursor: default;
+}
+.pagination li.disabled span { /* If you add disabled states */
+    color: #aaa;
+    border-color: #ddd;
+    cursor: default;
+}
+
+
+/* Single News Article (news_article.php) */
+.article-container {
+    /* Uses .content-section-container */
+}
+.news-full-article { /* Extends .content-block */
+    /* padding: 30px; */ /* Already in .content-block */
+}
+.news-full-article h1 {
+    font-size: 2.2em; /* Larger title for single article */
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.article-multimedia {
+    margin-bottom: 25px;
+    text-align: center; /* Center images/videos */
+}
+.article-content {
+    font-size: 1.05em;
+    line-height: 1.8; /* More spacing for long-form content */
+    color: var(--text-primary);
+}
+.article-content p { /* If content is HTML, this will apply */
+    margin-bottom: 1.2em;
+    line-height: 1.8;
+}
+.back-to-news {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* School History Page Styles */
+#key-milestones-timeline h2 { /* H2 within this section */
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.history-events-container {
+    /* For a timeline list layout, could use a simple block layout or CSS grid for more complex timelines */
+    /* For now, let's make them stack like content blocks but with specific card styling */
+}
+
+.history-card {
+    background-color: var(--neutral-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 25px; /* Space between history event cards */
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.3s ease;
+    display: flex; /* Allow for image and content side-by-side or stacked */
+    flex-direction: column; /* Default to stacking */
+    gap: 15px; /* Space between image and content if side-by-side */
+}
+
+.history-card:hover {
+    box-shadow: var(--card-hover-shadow);
+}
+
+.history-card-image {
+    width: 100%; /* Full width for stacked layout */
+    max-height: 250px; /* Max height for history images */
+    border-radius: var(--border-radius); /* Rounded corners for image */
+    overflow: hidden; /* Clip image */
+    margin-bottom: 10px; /* Space if stacked */
+}
+
+.history-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.history-card-content {
+    flex-grow: 1;
+}
+
+.history-card-date {
+    font-size: 1.1em;
+    color: var(--accent-color); /* Use accent color for date */
+    font-weight: bold;
+    margin-bottom: 0.3em;
+}
+
+.history-card-title {
+    font-size: 1.4em; /* Prominent title */
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+}
+
+.history-card-description {
+    font-size: 0.95em;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* Responsive adjustments for history cards */
+@media (min-width: 768px) { /* Apply side-by-side layout for larger screens */
+    .history-card {
+        flex-direction: row; /* Image and content side-by-side */
+        align-items: flex-start; /* Align items to the top */
+    }
+    .history-card-image {
+        flex: 1; /* Image takes up some space */
+        max-width: 250px; /* Limit image width in side-by-side */
+        height: auto; /* Auto height to maintain aspect ratio */
+        margin-bottom: 0; /* No margin if side-by-side */
+    }
+    .history-card-content {
+        flex: 2; /* Content takes more space */
+        padding-left: 20px; /* Add padding if image is present and side-by-side */
+    }
+    .history-card:not(:has(.history-card-image)) .history-card-content { /* If no image, content takes full width */
+        padding-left: 0;
+    }
+}
+
+#historical-archive-link h2 { /* H2 within this section */
+    text-align: center;
+    margin-bottom: 0.8em;
+}
+#historical-archive-link p {
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-size: 1em;
+    color: var(--text-secondary);
+}
+
+/* Faculty Page Styles */
+.faculty-grid-container { /* This is a .card-based-section */
+    /* Uses existing .card-based-section styles for padding and max-width */
+}
+
+.faculty-grid-container h2 { /* H2 within this section */
+    text-align: center; /* Center the "教师团队介绍" heading */
+    margin-bottom: 1.5em; /* Ensure enough space before cards */
+}
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 25px; /* Consistent gap with other card containers */
+}
+
+.faculty-card {
+    background-color: var(--neutral-bg); /* White background for cards */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Stack image and content vertically */
+}
+
+.faculty-card:hover {
+    box-shadow: var(--card-hover-shadow);
+}
+
+.faculty-card-image {
+    width: 100%; /* Make image container take full width of card padding */
+    padding-top: 75%; /* Aspect ratio 4:3 (height is 75% of width) */
+    position: relative; /* For positioning the img inside */
+    border-radius: var(--border-radius) var(--border-radius) 0 0; /* Rounded top corners */
+    overflow: hidden; /* Clip image to rounded corners */
+    margin-bottom: 15px; /* Space between image and content */
+}
+
+.faculty-card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area, crop if necessary */
+}
+
+.faculty-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow content to take remaining space */
+}
+
+.faculty-card-name {
+    font-size: 1.3em; /* Larger name */
+    color: var(--primary-color);
+    margin-bottom: 0.3em;
+}
+
+.faculty-card-title {
+    font-size: 1em;
+    color: var(--text-secondary);
+    font-weight: 500; /* Medium weight for title */
+    margin-bottom: 0.8em;
+}
+
+.faculty-card-bio {
+    font-size: 0.9em;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    flex-grow: 1; /* Ensure bio takes available space before any potential footer/link */
+}
+
+/* Responsive adjustments for faculty cards specifically if needed */
+@media (max-width: 600px) {
+    .faculty-grid {
+        /* On very small screens, could go to single column, but minmax(300px, 1fr) might already handle this well. */
+        /* grid-template-columns: 1fr; */
+    }
+    .faculty-card-image {
+        padding-top: 100%; /* Square aspect ratio on smaller screens if desired */
+    }
+}
+
+
+/* Campus Services Hub Page - Service Cards */
+#campus-services .service-card {
+    text-align: center; /* Center content within service cards */
+}
+
+#campus-services .service-card .card-icon span {
+    font-size: 2.5em; /* Consistent with #explore-academics icons */
+    margin-bottom: 0.5em;
+    color: var(--primary-color);
+    display: block;
+}
+
+#campus-services .service-card h3 {
+    font-size: 1.3em; /* Slightly larger heading for services */
+    margin-bottom: 0.6em;
+}
+
+#campus-services .service-card p {
+    font-size: 0.9em; /* Standard paragraph size for cards */
+    min-height: 60px; /* Give some consistent height for description */
+}
+
+#campus-services .service-card .service-link {
+    display: inline-block; /* Make button take natural width */
+    margin-top: 15px; /* Space above the button */
+    /* Uses .cta-button .secondary-cta styles by default */
+    /* Can add specific overrides here if needed, e.g., different color */
+    /* background-color: var(--accent-color-green); */
+    /* color: var(--text-on-primary); */
+}
+/* #campus-services .service-card .service-link:hover {
+    background-color: #009939; /* Darker green for example */
+/* } */
+
+
+/* Virtual Campus Tour Page Styles */
+.tour-main-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 30px;
+}
+
+.tour-gallery-area {
+    flex: 2; /* Takes up more space */
+    min-width: 300px; /* Minimum width before wrapping */
+}
+
+.slideshow-container {
+    position: relative;
+    background-color: var(--card-bg); /* Light background for the slideshow area */
+    padding: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden; /* Ensures rounded corners clip images */
+}
+
+.tour-slide {
+    display: none; /* Hidden by default */
+}
+
+.tour-slide.active-slide {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out; /* Simple fade-in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+.tour-slide img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; /* Max height for the tour image */
+    object-fit: cover;
+    border-radius: var(--border-radius); /* Rounded corners for images */
+    border: 1px solid var(--border-color);
+}
+
+.slide-caption {
+    text-align: center;
+    padding: 10px 0 0 0;
+    font-weight: bold;
+    color: var(--text-primary);
+    font-size: 1.1em;
+}
+
+.prev-slide, .next-slide {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 16px;
+    color: var(--text-on-primary);
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    font-weight: bold;
+    font-size: 1.5em;
+    transition: background-color 0.3s ease;
+    border: none;
+    user-select: none; /* Prevents text selection */
+    border-radius: 0 3px 3px 0; /* Rounded on one side */
+}
+
+.next-slide {
+    right: 15px; /* Positioned within the slideshow container padding */
+    border-radius: 3px 0 0 3px;
+}
+.prev-slide {
+    left: 15px; /* Positioned within the slideshow container padding */
+}
+
+.prev-slide:hover, .next-slide:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.tour-navigation-info-area {
+    flex: 1; /* Takes less space */
+    min-width: 280px; /* Minimum width before wrapping */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between locations list and info panels */
+}
+
+.tour-locations-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tour-locations-list li a.tour-location-link {
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+}
+.tour-locations-list li:last-child a.tour-location-link {
+    border-bottom: none;
+}
+
+.tour-locations-list li a.tour-location-link:hover {
+    background-color: #e9e9e9; /* Lighter hover for list items */
+    color: var(--primary-color);
+}
+
+.tour-locations-list li a.tour-location-link.active-location {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    font-weight: bold;
+}
+.tour-locations-list li a.tour-location-link.active-location:hover {
+    background-color: var(--primary-color); /* Keep active color on hover */
+}
+
+
+.tour-information-panels .info-panel {
+    display: none; /* Hidden by default */
+    padding: 15px;
+    border: 1px solid var(--border-color); /* Add border to info panels for clarity */
+    border-radius: var(--border-radius);
+    background-color: var(--neutral-bg); /* Ensure white background */
+}
+
+.tour-information-panels .info-panel.active-info {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.tour-information-panels .info-panel h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.8em;
+    font-size: 1.3em;
+}
+.tour-information-panels .info-panel p {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* Responsive adjustments for tour page */
+@media (max-width: 768px) {
+    .tour-main-container {
+        flex-direction: column; /* Stack gallery and nav/info area */
+    }
+    .tour-gallery-area, .tour-navigation-info-area {
+        flex: none; /* Reset flex property */
+        width: 100%;
+    }
+    .slideshow-container {
+        margin-bottom: 20px; /* Space when stacked */
+    }
+    .tour-slide img {
+        max-height: 400px; /* Adjust image height for smaller screens */
+    }
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--neutral-bg);
+    font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    margin-bottom: 0.75em;
+    color: var(--text-primary);
+}
+
+h1 { font-size: 2.25em; /* 36px */ }
+h2 { font-size: 1.75em; /* 28px */ }
+h3 { font-size: 1.375em; /* 22px */ }
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Header and Navigation */
+.app-bar {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+#school-logo {
+    height: 40px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
+    margin-right: 10px;
+}
+
+.school-name {
+    font-family: var(--font-heading);
+    font-size: 1.5em; /* 24px */
+    font-weight: bold;
+}
+
+.nav-links a,
+.nav-links .dropdown-toggle { /* Apply to both direct links and dropdown toggles */
+    color: var(--text-on-primary);
+    margin: 0 10px; /* Reduced margin to fit longer Chinese text */
+    padding: 5px 0; /* Add some vertical padding for click area, remove horizontal */
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.95em; /* Slightly reduced font size */
+    text-align: center;
+    white-space: nowrap; /* Prevent wrapping of nav items */
+}
+
+.nav-links a:hover,
+.nav-links a.active,
+.dropdown-toggle:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Dropdown Styling */
+.nav-item.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.nav-item.dropdown .dropdown-toggle { /* Ensure dropdown toggle itself is also an inline-block or similar */
+    display: inline-block;
+}
+
+
+.dropdown-toggle::after { /* Basic arrow for dropdown */
+    content: ' ▼';
+    font-size: 0.7em;
+    margin-left: 4px;
+}
+
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; /* Position below the parent link */
+    left: 0;
+    background-color: var(--primary-color); /* Same as app bar */
+    min-width: 200px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    z-index: 1100; /* Ensure it's above other content */
+    padding: 5px 0;
+    border-top: 1px solid rgba(255,255,255,0.2); /* Separator */
+}
+
+.nav-item.dropdown:hover .dropdown-menu,
+.nav-item.dropdown:focus-within .dropdown-menu { /* Show on hover or when child has focus */
+    display: block;
+}
+
+.dropdown-menu a {
+    color: var(--text-on-primary);
+    padding: 10px 15px;
+    display: block;
+    white-space: nowrap;
+    margin: 0; /* Override default margin for nav-links a */
+}
+
+.dropdown-menu a:hover {
+    background-color: rgba(255,255,255,0.2);
+    text-decoration: none; /* Remove underline from dropdown item hover */
+}
+
+.search-container #search-icon {
+    background: none;
+    border: none;
+    color: var(--text-on-primary);
+    font-size: 1.5em; /* 24px */
+    cursor: pointer;
+}
+
+.mobile-menu-button {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    color: var(--text-on-primary);
+    font-size: 1.8em; /* 28px */
+    cursor: pointer;
+}
+
+/* Main Content Area */
+main {
+    padding-top: var(--header-height); /* To offset fixed header */
+    padding-bottom: 20px;
+}
+
+.page-title-section {
+    background-color: var(--card-bg);
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-title-section h1 {
+    margin-bottom: 0.25em;
+}
+
+.content-section {
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    padding: 0 20px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: var(--primary-color) url('placeholder_hero.jpg') no-repeat center center/cover; /* Placeholder BG */
+    color: var(--text-on-primary);
+    text-align: center;
+    padding: 80px 20px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-content h1 {
+    font-size: 3em; /* 48px */
+    margin-bottom: 0.5em;
+    color: var(--text-on-primary); /* Ensure hero h1 is white */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Add subtle text shadow for readability */
+}
+
+.hero-content p {
+    font-size: 1.25em; /* 20px */
+    margin-bottom: 1.5em;
+    max-width: 700px; /* Constrain width of hero text */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Add subtle text shadow for readability */
+}
+
+/* Buttons */
+.cta-button {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 1em; /* 16px */
+    margin: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.cta-button.primary-cta {
+    background-color: var(--accent-color);
+    color: var(--text-primary); /* Text on accent color */
+}
+
+.cta-button.primary-cta:hover {
+    background-color: #FFB300; /* Darker amber */
+    box-shadow: var(--card-hover-shadow);
+    text-decoration: none;
+}
+
+.cta-button.secondary-cta {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.hero-section .cta-button.secondary-cta { /* Specific for hero */
+    color: var(--text-on-primary);
+    border-color: var(--text-on-primary);
+}
+
+.cta-button.secondary-cta:hover {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    text-decoration: none;
+}
+
+/* Card-Based Layouts */
+.card-based-section {
+    max-width: 1200px; /* Wider for card layouts */
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.card-based-section h2 {
+    text-align: center;
+    margin-bottom: 1.5em; /* 42px */
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background-color: var(--card-bg); /* Using off-white for cards */
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    box-shadow: var(--card-hover-shadow);
+}
+
+.card img {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin: -20px -20px 15px -20px; /* Make image flush with card top */
+    width: calc(100% + 40px);
+    max-width: calc(100% + 40px); /* Override general img max-width */
+    height: 200px; /* Fixed height for card images */
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color); /* Separator if image doesn't load */
+}
+
+.card h3 {
+    font-size: 1.25em; /* 20px */
+    margin-bottom: 0.5em;
+    color: var(--primary-color); /* Make card titles stand out */
+}
+
+.card p {
+    font-size: 0.95em; /* ~15px */
+    flex-grow: 1;
+    margin-bottom: 1em;
+    color: var(--text-secondary); /* Softer text for card descriptions */
+}
+
+.card .card-link { /* Specific class for "Read More" type links in cards */
+    display: inline-block; /* Allows margin-top */
+    margin-top: auto; /* Pushes to the bottom */
+    padding-top: 10px; /* Space above the link */
+    font-weight: bold;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+.card .card-link:hover {
+    color: var(--accent-color);
+}
+
+
+.card time {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    margin-top: 10px; /* Add some space if it's not the only element at bottom */
+    display: block; /* Ensure it takes its own line if needed */
+}
+
+/* Specific Card Styles */
+#news-announcements .card {
+    background-color: var(--neutral-bg); /* White background for news cards to pop a bit more */
+}
+
+
+#upcoming-events .card {
+    display: flex; /* Use flex for better alignment of date and details */
+    align-items: flex-start; /* Align items to the top */
+    padding-bottom: 15px; /* Adjust padding */
+}
+#upcoming-events .event-date {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    width: 70px; /* Fixed width */
+    min-width: 70px; /* Prevent shrinking */
+    margin-right: 20px; /* Increased margin */
+    /* Removed float for flex layout */
+}
+#upcoming-events .event-date .month {
+    display: block;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+#upcoming-events .event-date .day {
+    display: block;
+    font-size: 1.8em;
+    font-weight: bold;
+    line-height: 1.1;
+}
+#upcoming-events .event-details {
+    flex-grow: 1; /* Allow details to take remaining space */
+}
+#upcoming-events .event-details h3 {
+    margin-bottom: 0.3em; /* Tighter margin for event titles */
+}
+#upcoming-events .event-details p {
+    font-size: 0.9em; /* Slightly smaller text for event descriptions */
+    margin-bottom: 0.8em;
+}
+
+
+.text-center.section-cta { /* For "View Full Calendar" button */
+    margin-top: 30px; /* Space above the button */
+}
+
+
+#explore-academics .card {
+    text-align: center; /* Center content in these cards */
+}
+#explore-academics .card-icon span { /* Icon placeholder */
+    font-size: 2.5em; /* Larger icon */
+    margin-bottom: 0.5em;
+    color: var(--primary-color);
+    display: block; /* Ensure it's on its own line */
+}
+#explore-academics .card h3 {
+    font-size: 1.15em; /* Slightly smaller for these cards if needed */
+}
+
+
+#quick-links .quick-link-card span { /* Icon styling for quick links */
+    font-size: 1.8em; /* Adjust icon size */
+    margin-bottom: 0.3em;
+    color: var(--primary-color);
+    display: block;
+}
+#quick-links .quick-link-card {
+    font-size: 0.95em; /* Adjust text size */
+    padding: 15px; /* Adjust padding */
+}
+
+.quick-links-container {
+/* END OF HOMEPAGE SPECIFIC STYLES (or a known unique section) */
+
+/* General Content Page Styling */
+.page-title-section .page-subtitle { /* Already have .page-title-section, adding .page-subtitle */
+    font-size: 1.1em;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 10px auto 0 auto; /* Center subtitle, add some top margin */
+}
+
+.content-section-container { /* Wrapper for multiple content blocks on content pages */
+    max-width: 960px; /* Standard width for content */
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
+}
+
+.content-block {
+    background-color: var(--neutral-bg); /* White background for content blocks */
+    padding: 30px; /* Increased padding */
+    margin-bottom: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Softer shadow for content blocks */
+}
+.content-block:last-child {
+    margin-bottom: 0;
+}
+
+.content-block h2 {
+    font-size: 1.8em; /* Consistent H2 size */
+    color: var(--primary-color);
+    margin-bottom: 1em;
+    border-bottom: 2px solid var(--accent-color); /* Accent border for H2 */
+    padding-bottom: 0.4em; /* Space between text and border */
+}
+.content-block h3 {
+    font-size: 1.4em;
+    color: var(--text-primary); /* Darker for H3 */
+    margin-top: 1.5em; /* Space above H3 */
+    margin-bottom: 0.6em;
+}
+.content-block p {
+    line-height: 1.7;
+    margin-bottom: 1.2em;
+    color: var(--text-secondary);
+}
+.content-block ul, .content-block ol {
+    margin-bottom: 1.5em;
+    padding-left: 25px; /* Indent lists */
+}
+.content-block ul li, .content-block ol li {
+    margin-bottom: 0.7em; /* Increased spacing for list items */
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.content-block ul li strong, .content-block ol li strong {
+    color: var(--text-primary);
+}
+
+/* Specific to About Page */
+.mission-vision-flex {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.mission-item, .vision-item {
+    flex: 1;
+    min-width: 280px;
+}
+.mission-item h3, .vision-item h3 {
+    margin-top: 0; /* Remove top margin for H3 if it's the first element */
+}
+
+.profile-card { /* Extends .card */
+    text-align: center;
+}
+.profile-card img {
+    margin: -20px -20px 15px -20px; /* Keep consistent with other card images */
+    width: calc(100% + 40px);
+    max-width: calc(100% + 40px);
+    height: 250px; /* Taller image for profiles */
+    object-fit: cover;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+.profile-card-content {
+    padding: 20px; /* Add padding inside if image is flush */
+}
+.profile-card-content .profile-title {
+    font-size: 1em;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: -0.5em;
+    margin-bottom: 0.8em;
+}
+
+/* Specific to Academics Page */
+.department-card .card-icon span { /* Using existing .card-icon from homepage for consistency */
+    font-size: 2.2em;
+}
+.feature-list {
+    list-style-type: none; /* Remove default bullets */
+    padding-left: 5px;
+}
+.feature-list li {
+    padding-left: 25px; /* Space for custom icon */
+    position: relative;
+    margin-bottom: 0.8em;
+}
+.feature-list li::before {
+    content: '✔'; /* Simple checkmark */
+    color: var(--accent-color-green);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 1px; /* Adjust alignment */
+}
+
+/* Specific to Admissions Page */
+.process-list {
+    list-style-type: none;
+    counter-reset: process-counter;
+    padding-left: 50px; /* Space for custom counters */
+}
+.process-list li {
+    margin-bottom: 1.5em; /* More space for process items */
+    position: relative;
+}
+.process-list li::before {
+    counter-increment: process-counter;
+    content: counter(process-counter);
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    font-weight: bold;
+    border-radius: 50%;
+    width: 35px; /* Slightly larger counter */
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+    line-height: 35px;
+    margin-right: 15px; /* Space after counter */
+    position: absolute;
+    left: -50px;
+    top: -5px; /* Adjust vertical alignment */
+}
+.process-list li strong { /* Make step titles more prominent */
+    display: block;
+    font-size: 1.1em;
+    color: var(--text-primary);
+    margin-bottom: 0.3em;
+}
+
+.faq-item {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    background-color: var(--neutral-bg); /* White background for FAQ items */
+}
+.faq-item summary {
+    padding: 15px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    color: var(--primary-color);
+    position: relative; /* For custom marker */
+    list-style: none; /* Remove default marker */
+}
+.faq-item summary::-webkit-details-marker { display: none; } /* Hide Safari marker */
+.faq-item summary:hover {
+    background-color: var(--card-bg); /* Light hover for summary */
+}
+.faq-item summary::after { /* Custom marker */
+    content: '➕';
+    color: var(--accent-color);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1em;
+    transition: transform 0.2s ease;
+}
+.faq-item[open] summary::after {
+    content: '➖';
+    transform: translateY(-50%) rotate(0); /* Keep minus sign upright */
+}
+.faq-item .faq-answer { /* Class for the content part of FAQ */
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+.faq-item .faq-answer p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Specific to Contact Page */
+.contact-flex-container {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.contact-info-block {
+    flex: 1;
+    min-width: 320px; /* Ensure enough width for contact info */
+    background-color: var(--card-bg); /* Light background for info block */
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.contact-info-block h2, .contact-form-block h2 { /* Match styling for h2 in these blocks */
+    font-size: 1.8em;
+    color: var(--primary-color);
+    margin-bottom: 1em;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.4em;
+}
+.contact-info-block h3 { /* Specific for "Specific Contacts:" */
+    font-size: 1.2em;
+    color: var(--text-primary);
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+}
+.contact-form-block { /* Extends .form-section but used within flex */
+    flex: 1.5;
+    min-width: 320px;
+    background-color: var(--neutral-bg); /* White background for form */
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.contact-details p {
+    margin-bottom: 1em; /* Increased spacing */
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+.contact-details .icon-placeholder {
+    display: inline-block; /* Align icon better */
+    width: 20px; /* Give icon some space */
+    text-align: center;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+.contact-list {
+    list-style: none;
+    padding-left: 0;
+}
+.contact-list li {
+    margin-bottom: 0.6em;
+    color: var(--text-secondary);
+}
+.contact-list li a {
+    color: var(--primary-color);
+}
+.contact-list li a:hover {
+    color: var(--accent-color);
+}
+
+#map-directions-container .content-block {
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent; /* No background for map container block */
+}
+#map-placeholder { /* Style the map placeholder itself */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 20px; /* Space before button */
+}
+
+/* Adjustments for form elements inside contact-form-block */
+.contact-form-block .form-group label {
+    color: var(--text-secondary);
+    font-weight: 500; /* Slightly less bold labels */
+}
+.contact-form-block .cta-button { /* Ensure contact form button uses accent-color-green */
+    background-color: var(--accent-color-green);
+}
+.contact-form-block .cta-button:hover {
+    background-color: #00B347;
+}
+
+/* Ensure content-block styling is not too aggressive for card-based sections */
+.card-based-section .content-block { /* If a content-block is ever INSIDE a card-based section */
+    box-shadow: none;
+    padding: 0;
+}
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.quick-link-card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow 0.3s ease;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+.quick-link-card:hover {
+    box-shadow: var(--card-hover-shadow);
+    text-decoration: none;
+    color: var(--primary-color);
+}
+.quick-link-card span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+/* Footer */
+footer {
+    background-color: #333; /* Dark background for footer */
+    color: #ccc; /* Light text on dark background */
+    padding: 30px 20px 15px;
+    margin-top: 40px;
+    border-top: 4px solid var(--primary-color);
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+}
+
+.footer-content > div {
+    flex: 1;
+    min-width: 250px; /* Ensure columns don't get too squished */
+}
+
+.footer-content h3 {
+    color: var(--text-on-primary);
+    margin-bottom: 10px;
+}
+
+.footer-content p, .footer-content a {
+    color: #ccc;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+.footer-content a:hover {
+    color: var(--text-on-primary);
+}
+
+.social-media-links a {
+    margin-right: 10px;
+    font-size: 1.5em; /* Larger icons */
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.85em;
+    padding-top: 15px;
+    border-top: 1px solid #555;
+    margin-top: 20px;
+}
+
+/* Forms (Basic Styling for Contact Page) */
+.form-section {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    max-width: 700px;
+    margin: 30px auto;
+}
+.form-section h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+.form-group {
+    margin-bottom: 1.5em;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-body);
+    font-size: 1em;
+}
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+.form-section .cta-button {
+    display: block;
+    width: 100%;
+    background-color: var(--accent-color-green);
+    color: var(--text-on-primary);
+}
+.form-section .cta-button:hover {
+    background-color: #00B347; /* Darker green */
+}
+
+/* Campus Tour Specifics */
+#virtual-map-placeholder {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+}
+
+.tour-point-card img {
+    height: 220px; /* Slightly taller images for tour points */
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .nav-links {
+        display: none; /* Hidden on desktop by default */
+        flex-direction: column; /* Stack links vertically */
+        align-items: stretch; /* Make links take full width */
+        width: 100%;
+        position: absolute;
+        top: var(--header-height); /* Position below the header */
+        left: 0;
+        background-color: var(--primary-color);
+        padding: 0; /* Remove padding for full-width items */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        z-index: 1050; /* Below dropdowns but above main content */
+    }
+    .nav-links.active { /* This class will be toggled with JavaScript */
+        display: flex;
+    }
+
+    /* Style for both direct links and dropdown containers in mobile */
+    .nav-links a,
+    .nav-links .nav-item.dropdown > a.dropdown-toggle { /* Target the toggle specifically */
+        display: block;
+        margin: 0;
+        text-align: left;
+        padding: 12px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: var(--text-on-primary); /* Ensure text color is white */
+    }
+
+    /* Remove bottom border from the very last item in the nav */
+    .nav-links > a:last-of-type,
+    .nav-links > .nav-item.dropdown:last-of-type > a.dropdown-toggle {
+        border-bottom: none;
+    }
+
+    .nav-links .nav-item.dropdown .dropdown-menu {
+        position: static; /* Override absolute positioning for mobile */
+        box-shadow: none;
+        border-radius: 0;
+        border-top: none;
+        min-width: 100%;
+        padding-left: 15px; /* Indent dropdown items */
+        background-color: rgba(0,0,0,0.1); /* Slightly darker BG for mobile dropdown */
+        border-bottom: 1px solid rgba(255,255,255,0.1); /* Add border to menu itself */
+    }
+    .nav-links .nav-item.dropdown:last-of-type .dropdown-menu {
+        border-bottom: none; /* Remove border if it's the last item's menu */
+    }
+
+    .nav-links .dropdown-menu a {
+        padding: 10px 20px; /* Consistent padding */
+        border-bottom: 1px solid rgba(255,255,255,0.05); /* Fainter border for sub-items */
+    }
+    .nav-links .dropdown-menu a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links .dropdown-toggle::after {
+        float: right; /* Position arrow to the right on mobile */
+        margin-right: 5px;
+        transition: transform 0.3s ease; /* For rotating arrow if JS is used */
+    }
+    /* Consider adding a class for expanded mobile dropdowns if JS toggles aria-expanded */
+    /* .nav-links .dropdown-toggle[aria-expanded="true"]::after { transform: rotate(180deg); } */
+
+    .mobile-menu-button {
+        display: block; /* Show hamburger icon */
+    }
+    .search-container {
+        /* Adjust search for mobile if needed, or integrate into mobile menu */
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em; /* 40px */
+    }
+    .hero-content p {
+        font-size: 1.1em; /* ~17px */
+    }
+
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust card min size */
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-content > div {
+        min-width: auto; /* Allow footer sections to stack */
+        margin-bottom: 20px;
+    }
+    .social-media-links {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2em; /* 32px */
+    }
+    .hero-content p {
+        font-size: 1em; /* 16px */
+    }
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    .card-container {
+        grid-template-columns: 1fr; /* Stack cards on small screens */
+    }
+    .page-title-section {
+        padding: 20px;
+    }
+    .page-title-section h1 {
+        font-size: 1.8em;
+    }
+    .form-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --header-height: 56px; /* Slightly smaller header for small devices */
+    }
+    body {
+        font-size: 15px;
+    }
+    .school-name {
+        font-size: 1.2em; /* ~19px */
+    }
+    #school-logo {
+        height: 30px;
+    }
+    .hero-content h1 {
+        font-size: 1.8em; /* ~29px */
+    }
+    .hero-content p {
+        font-size: 0.95em; /* ~15px */
+    }
+}
+
+/* Import Google Fonts - Best placed in HTML head for performance, but can be here too */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+/* Open Sans as an alternative if Roboto is too much
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+*/
+
+```
