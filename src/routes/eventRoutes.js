@@ -2,20 +2,13 @@
 const express = require('express');
 const router = express.Router();
 const eventController = require('../controllers/eventController');
+const validateRequest = require('../middlewares/validateRequest');
+const { createEventSchema, updateEventSchema } = require('../validators/eventValidation');
 
-// POST /api/events - Create a new event
-router.post('/', eventController.createEvent);
-
-// GET /api/events - Get all events
+router.post('/', validateRequest(createEventSchema), eventController.createEvent);
 router.get('/', eventController.getAllEvents);
-
-// GET /api/events/:id - Get a specific event by ID
 router.get('/:id', eventController.getEventById);
-
-// PUT /api/events/:id - Update a specific event by ID
-router.put('/:id', eventController.updateEvent);
-
-// DELETE /api/events/:id - Delete a specific event by ID
+router.put('/:id', validateRequest(updateEventSchema), eventController.updateEvent);
 router.delete('/:id', eventController.deleteEvent);
 
 module.exports = router;

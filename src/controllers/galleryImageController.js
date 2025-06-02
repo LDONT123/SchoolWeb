@@ -35,8 +35,34 @@ exports.createGalleryImage = async (req, res) => {
 // @access  Public
 exports.getAllGalleryImages = async (req, res) => {
     try {
-        const images = await GalleryImage.find().sort({ _id: -1 }); // Sort by insertion order (descending) or choose another field
-        res.json(images);
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        // Default sort by _id (MongoDB's default, usually insertion order)
+        // or allow client to specify, e.g., 'alt' or 'caption' if useful
+        const sortBy = req.query.sortBy || '_id'; 
+        const order = req.query.order === 'asc' ? 1 : -1; // Default descending for _id
+
+        const skip = (page - 1) * limit;
+        const sortOptions = {};
+        if (sortBy) sortOptions[sortBy] = order;
+
+        const images = await GalleryImage.find()
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+        
+        const totalImages = await GalleryImage.countDocuments();
+        const totalPages = Math.ceil(totalImages / limit);
+
+        res.json({
+            data: images,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalImages,
+                itemsPerPage: limit
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

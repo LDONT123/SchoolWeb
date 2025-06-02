@@ -38,8 +38,32 @@ exports.createImportantDate = async (req, res) => {
 // @access  Public
 exports.getAllImportantDates = async (req, res) => {
     try {
-        const importantDates = await ImportantDate.find().sort({ date: 1 }); // Sort by date ascending
-        res.json(importantDates);
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const sortBy = req.query.sortBy || 'date';
+        const order = req.query.order === 'desc' ? -1 : 1; // Default order ascending for dates
+
+        const skip = (page - 1) * limit;
+        const sortOptions = {};
+        if (sortBy) sortOptions[sortBy] = order;
+
+        const importantDates = await ImportantDate.find()
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+
+        const totalDates = await ImportantDate.countDocuments();
+        const totalPages = Math.ceil(totalDates / limit);
+        
+        res.json({
+            data: importantDates,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalDates,
+                itemsPerPage: limit
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

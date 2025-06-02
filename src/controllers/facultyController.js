@@ -40,8 +40,32 @@ exports.createFaculty = async (req, res) => {
 // @access  Public
 exports.getAllFaculty = async (req, res) => {
     try {
-        const facultyMembers = await Faculty.find().sort({ name: 1 }); // Sort by name ascending
-        res.json(facultyMembers);
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const sortBy = req.query.sortBy || 'name'; // Default sort by name
+        const order = req.query.order === 'desc' ? -1 : 1; // Default order ascending
+
+        const skip = (page - 1) * limit;
+        const sortOptions = {};
+        if (sortBy) sortOptions[sortBy] = order;
+
+        const facultyMembers = await Faculty.find()
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+        
+        const totalFaculty = await Faculty.countDocuments();
+        const totalPages = Math.ceil(totalFaculty / limit);
+
+        res.json({
+            data: facultyMembers,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalFaculty,
+                itemsPerPage: limit
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

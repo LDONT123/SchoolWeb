@@ -37,8 +37,32 @@ exports.createNews = async (req, res) => {
 // @access  Public
 exports.getAllNews = async (req, res) => {
     try {
-        const newsItems = await News.find().sort({ date: -1 }); // Sort by date descending
-        res.json(newsItems);
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const sortBy = req.query.sortBy || 'date';
+        const order = req.query.order === 'asc' ? 1 : -1;
+
+        const skip = (page - 1) * limit;
+        const sortOptions = {};
+        if (sortBy) sortOptions[sortBy] = order;
+
+        const newsItems = await News.find()
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+        
+        const totalNews = await News.countDocuments();
+        const totalPages = Math.ceil(totalNews / limit);
+
+        res.json({
+            data: newsItems,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalNews,
+                itemsPerPage: limit
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

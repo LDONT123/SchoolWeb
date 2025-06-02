@@ -40,13 +40,39 @@ exports.createCampusResource = async (req, res) => {
 exports.getAllCampusResources = async (req, res) => {
     try {
         // Example: Allow filtering by category
-        const { category } = req.query;
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const sortBy = req.query.sortBy || 'name';
+        const order = req.query.order === 'desc' ? -1 : 1;
+        
+        const { category } = req.query; // Keep existing filter
         const filter = {};
         if (category) {
             filter.category = category;
         }
-        const resources = await CampusResource.find(filter).sort({ name: 1 }); // Sort by name
-        res.json(resources);
+
+        const skip = (page - 1) * limit;
+        const sortOptions = {};
+        if (sortBy) sortOptions[sortBy] = order;
+
+        const resources = await CampusResource.find(filter) // Apply filter
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+        
+        const totalResources = await CampusResource.countDocuments(filter);
+        const totalPages = Math.ceil(totalResources / limit);
+
+        res.json({
+            data: resources,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalResources,
+                itemsPerPage: limit,
+                ...(category && { filterCategory: category }) // Include filter info in response
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

@@ -38,11 +38,38 @@ exports.createEvent = async (req, res) => {
 // @access  Public
 exports.getAllEvents = async (req, res) => {
     try {
-        const events = await Event.find().sort({ date: -1 }); // Default sort by date descending
-        res.json(events);
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const sortBy = req.query.sortBy || 'date'; // Default sort field
+        const order = req.query.order === 'asc' ? 1 : -1; // Default order descending
+
+        const skip = (page - 1) * limit;
+
+        const sortOptions = {};
+        if (sortBy) {
+            sortOptions[sortBy] = order;
+        }
+
+        const events = await Event.find()
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+
+        const totalEvents = await Event.countDocuments();
+        const totalPages = Math.ceil(totalEvents / limit);
+
+        res.json({
+            data: events,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalEvents,
+                itemsPerPage: limit
+            }
+        });
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Server Error'); // Will be caught by global error handler if not sent
     }
 };
 

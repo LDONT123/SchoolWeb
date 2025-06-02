@@ -39,13 +39,39 @@ exports.createDocument = async (req, res) => {
 exports.getAllDocuments = async (req, res) => {
     try {
         // Example: Allow filtering by type
-        const { type } = req.query;
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const sortBy = req.query.sortBy || 'name';
+        const order = req.query.order === 'desc' ? -1 : 1;
+
+        const { type } = req.query; // Keep existing filter
         const filter = {};
         if (type) {
             filter.type = type;
         }
-        const documents = await Document.find(filter).sort({ name: 1 }); // Sort by name
-        res.json(documents);
+
+        const skip = (page - 1) * limit;
+        const sortOptions = {};
+        if (sortBy) sortOptions[sortBy] = order;
+
+        const documents = await Document.find(filter) // Apply filter
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
+        
+        const totalDocuments = await Document.countDocuments(filter);
+        const totalPages = Math.ceil(totalDocuments / limit);
+
+        res.json({
+            data: documents,
+            pagination: {
+                currentPage: page,
+                totalPages,
+                totalItems: totalDocuments,
+                itemsPerPage: limit,
+                ...(type && { filterType: type }) // Include filter info in response
+            }
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
